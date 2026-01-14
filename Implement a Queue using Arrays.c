@@ -1,7 +1,6 @@
 #include <stdio.h>
 #define MAX 5
 int queue[MAX], front=0, rear=-1, count=0;
-
 void enqueue(int val) {
     if(count == MAX) printf("Queue Full\n");
     else {
@@ -17,4 +16,3 @@ int dequeue() {
     count--;
     return val;
 }
-
