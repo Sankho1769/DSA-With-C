@@ -1,0 +1,4 @@
+#include <stdio.h>
+typedef struct{int u,v,w;}Edge;int parent[100],rankv[100];int find(int x){return parent[x]==x?x:(parent[x]=find(parent[x]));}int unite(int a,int b){a=find(a);b=find(b);if(a==b)return 0;if(rankv[a]<rankv[b]){int t=a;a=b;b=t;}parent[b]=a;if(rankv[a]==rankv[b])rankv[a]++;return 1;}int cmp(const void*A,const void*B){return ((Edge*)A)->w-((Edge*)B)->w;}
+#include <stdlib.h>
+int main(void){int n,m,total=0,count=0;Edge e[200];printf("Vertices: ");scanf("%d",&n);printf("Edges: ");scanf("%d",&m);for(int i=0;i<m;i++){printf("u v weight: ");scanf("%d%d%d",&e[i].u,&e[i].v,&e[i].w);}for(int i=0;i<n;i++){parent[i]=i;rankv[i]=0;}qsort(e,m,sizeof(Edge),cmp);printf("MST edges:\n");for(int i=0;i<m&&count<n-1;i++)if(unite(e[i].u,e[i].v)){printf("%d - %d (%d)\n",e[i].u,e[i].v,e[i].w);total+=e[i].w;count++;}if(count!=n-1){printf("Graph is disconnected\n");return 1;}printf("MST weight: %d\n",total);return 0;}
