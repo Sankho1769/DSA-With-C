@@ -1,4 +1,51 @@
+/*
+ * DSA Interview Programs
+ * File: DSA_Edmonds_Karp.c
+ * Purpose: Interview-focused Data Structures and Algorithms practice.
+ */
+
 #include <stdio.h>
 #define MAX 50
-int main(void){int n,cap[MAX][MAX],res[MAX][MAX],parent[MAX],vis[MAX],s,t,flow=0;printf("Vertices: ");scanf("%d",&n);printf("Enter capacity matrix:\n");for(int i=0;i<n;i++)for(int j=0;j<n;j++)scanf("%d",&cap[i][j]);printf("Source sink: ");scanf("%d%d",&s,&t);for(int i=0;i<n;i++)for(int j=0;j<n;j++)res[i][j]=cap[i][j];while(1){for(int i=0;i<n;i++)parent[i]=-1,vis[i]=0;parent[s]=s;
-int q[MAX],f=0,r=0;q[r++]=s;vis[s]=1;while(f<r&&parent[t]==-1){int u=q[f++];for(int v=0;v<n;v++)if(!vis[v]&&res[u][v]>0){vis[v]=1;parent[v]=u;q[r++]=v;if(v==t)break;}}if(parent[t]==-1)break;int path=1000000000,v=t;while(v!=s){int u=parent[v];if(res[u][v]<path)path=res[u][v];v=u;}v=t;while(v!=s){int u=parent[v];res[u][v]-=path;res[v][u]+=path;v=u;}flow+=path;}printf("Maximum flow: %d\n",flow);return 0;}
+int main(void) {
+    int n,cap[MAX][MAX],res[MAX][MAX],parent[MAX],vis[MAX],s,t,flow=0;
+    printf("Vertices: ");
+    scanf("%d",&n);
+    printf("Enter capacity matrix:\n");
+    for(int i=0;i<n;i++)for(int j=0;j<n;j++)scanf("%d",&cap[i][j]);
+    printf("Source sink: ");
+    scanf("%d%d",&s,&t);
+    for(int i=0;i<n;i++)for(int j=0;j<n;j++)res[i][j]=cap[i][j];
+    while(1) {
+        for(int i=0;i<n;i++)parent[i]=-1,vis[i]=0;
+        parent[s]=s;
+        int q[MAX],f=0,r=0;
+        q[r++]=s;
+        vis[s]=1;
+        while(f<r&&parent[t]==-1) {
+            int u=q[f++];
+            for(int v=0;v<n;v++)if(!vis[v]&&res[u][v]>0) {
+                vis[v]=1;
+                parent[v]=u;
+                q[r++]=v;
+                if(v==t)break;
+            }
+        }
+        if(parent[t]==-1)break;
+        int path=1000000000,v=t;
+        while(v!=s) {
+            int u=parent[v];
+            if(res[u][v]<path)path=res[u][v];
+            v=u;
+        }
+        v=t;
+        while(v!=s) {
+            int u=parent[v];
+            res[u][v]-=path;
+            res[v][u]+=path;
+            v=u;
+        }
+        flow+=path;
+    }
+    printf("Maximum flow: %d\n",flow);
+    return 0;
+}

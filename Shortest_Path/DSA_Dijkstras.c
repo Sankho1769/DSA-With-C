@@ -1,3 +1,43 @@
+/*
+ * DSA Interview Programs
+ * File: DSA_Dijkstras.c
+ * Purpose: Interview-focused Data Structures and Algorithms practice.
+ */
+
 #include <stdio.h>
 #define INF 1000000000
-int main(void){int n,m,a[50][50],dist[50],used[50]={0},s,u,v,w;for(int i=0;i<50;i++)for(int j=0;j<50;j++)a[i][j]=INF;printf("Vertices: ");scanf("%d",&n);printf("Directed weighted edges: ");scanf("%d",&m);for(int i=0;i<m;i++){printf("u v weight: ");scanf("%d%d%d",&u,&v,&w);if(w<0){printf("Dijkstra requires non-negative weights\n");return 1;}a[u][v]=w;}printf("Source: ");scanf("%d",&s);for(int i=0;i<n;i++)dist[i]=INF;dist[s]=0;for(int k=0;k<n;k++){u=-1;for(int i=0;i<n;i++)if(!used[i]&&(u==-1||dist[i]<dist[u]))u=i;if(u==-1||dist[u]==INF)break;used[u]=1;for(v=0;v<n;v++)if(a[u][v]!=INF&&dist[u]+a[u][v]<dist[v])dist[v]=dist[u]+a[u][v];}printf("Distances: ");for(int i=0;i<n;i++)printf("%s%d",dist[i]==INF?"INF":(i?" ":""),dist[i]==INF?0:dist[i]);printf("\n");return 0;}
+int main(void) {
+    int n,m,a[50][50],dist[50],used[50]= {
+        0
+    }
+    ,s,u,v,w;
+    for(int i=0;i<50;i++)for(int j=0;j<50;j++)a[i][j]=INF;
+    printf("Vertices: ");
+    scanf("%d",&n);
+    printf("Directed weighted edges: ");
+    scanf("%d",&m);
+    for(int i=0;i<m;i++) {
+        printf("u v weight: ");
+        scanf("%d%d%d",&u,&v,&w);
+        if(w<0) {
+            printf("Dijkstra requires non-negative weights\n");
+            return 1;
+        }
+        a[u][v]=w;
+    }
+    printf("Source: ");
+    scanf("%d",&s);
+    for(int i=0;i<n;i++)dist[i]=INF;
+    dist[s]=0;
+    for(int k=0;k<n;k++) {
+        u=-1;
+        for(int i=0;i<n;i++)if(!used[i]&&(u==-1||dist[i]<dist[u]))u=i;
+        if(u==-1||dist[u]==INF)break;
+        used[u]=1;
+        for(v=0;v<n;v++)if(a[u][v]!=INF&&dist[u]+a[u][v]<dist[v])dist[v]=dist[u]+a[u][v];
+    }
+    printf("Distances: ");
+    for(int i=0;i<n;i++)printf("%s%d",dist[i]==INF?"INF":(i?" ":""),dist[i]==INF?0:dist[i]);
+    printf("\n");
+    return 0;
+}
